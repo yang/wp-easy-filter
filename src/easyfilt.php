@@ -41,7 +41,6 @@ $tag2cmd = array(
 $debug = false;
 $debugfile = '/mit/y_z/web_scripts/wp/wp-content/plugins/easyfilt/log.txt';
 add_filter('the_content', 'filter_custom', 1);
-remove_filter('the_content', 'wpautop');
 
 #
 # Constants.
@@ -62,6 +61,7 @@ function filter_custom($content) {
   $lines = explode("\n", $content);
   $tag = trim(substr($lines[0], 2));
   if (substr($lines[0], 0, 2) === '#!' && $tag2cmd[$tag]) {
+    remove_filter('the_content', 'wpautop');
     $cmd = $tag2cmd[$tag];
     $process = proc_open($cmd, $descriptorspec, $pipes);
     $body = implode("\n", array_slice($lines, 1));
@@ -75,6 +75,7 @@ function filter_custom($content) {
       $retval = proc_close($process);
     }
   } else {
+    add_filter('the_content', 'wpautop');
     $filtered = $content;
   }
   if ($debug) {
