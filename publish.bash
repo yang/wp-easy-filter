@@ -2,7 +2,7 @@
 
 . common.bash || exit 1
 
-fullname='WordPress Easy Filter'
+fullname='WordPress EasyFilter'
 version=0.1
 license=gpl3
 websrcs=( README )
