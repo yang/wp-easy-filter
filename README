@@ -1,0 +1,41 @@
+Overview
+--------
+
+This is a simple, general filter plug-in for WordPress.  You specify a mapping
+from tags to commands, such as:
+
+  $tag2cmd = array('pandoc' => '/usr/bin/pandoc -s --tab-stop=2');
+
+Then, for posts which are prefixed with a shebang line containing that tag, as in:
+
+  #!pandoc
+
+  Hello, world.
+
+Then the plug-in will feed the post contents to that command's stdin and return
+the rendered output to WordPress for display.
+
+This plug-in was designed to allow me to start using [Pandoc] for writing my
+blog posts.  (I couldn't force myself to use the [PHP Markdown Extras]
+plug-in.)
+
+It disables the `wpautop` filter, which automatically inserts `<p>` tags (among
+other magic), because that filter cannot properly parse the style of HTML that
+Pandoc outputs.
+
+Setup
+-----
+
+Drop `easyfilt.php` into your `wp-content/plugins/` directory, then activate
+the plug-in from the admin interface.
+
+Notes
+-----
+
+The author of [PHP Markdown Extras] wrote an [informative blog post] describing
+problems he had getting his filter to work properly and co-exist with the other
+built-in filters.
+
+[Pandoc]: http://johnmacfarlane.net/pandoc/
+[PHP Markdown Extras]: http://michelf.com/projects/php-markdown/extra/
+[informative blog post]: http://michelf.com/weblog/2005/wordpress-text-flow-vs-markdown/
