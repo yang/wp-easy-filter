@@ -3,7 +3,7 @@
 Plugin Name: Easy Filter
 Plugin URI: http://assorted.sf.net/wp-easy-filter/
 Description: Easy filtering of blog posts.
-Version: 1.0
+Version: 0.2
 Author: Yang Zhang
 Author URI: http://www.mit.edu/~y_z/
 */
@@ -57,7 +57,7 @@ $descriptorspec = $descriptorspec = array(
 #
 
 function filter_custom($content) {
-  global $debug, $tag2cmd, $wp_filter, $descriptorspec;
+  global $debug, $debugfile, $tag2cmd, $wp_filter, $descriptorspec;
   $lines = explode("\n", $content);
   $tag = trim(substr($lines[0], 2));
   if (substr($lines[0], 0, 2) === '#!' && $tag2cmd[$tag]) {
@@ -72,6 +72,9 @@ function filter_custom($content) {
       $filtered = stream_get_contents($pipes[1]);
       fclose($pipes[1]);
 
+      $stderr = stream_get_contents($pipes[2]);
+      fclose($pipes[2]);
+
       $retval = proc_close($process);
     }
   } else {
@@ -80,10 +83,16 @@ function filter_custom($content) {
   }
   if ($debug) {
     $f = fopen($debugfile, 'w');
-    fwrite($f, print_r($wp_filter, true));
-    fwrite($f, print_r($lines, true));
-    fwrite($f, substr($lines[0], 0, 2) . " " . (substr($lines[0], 0, 2) === '#!') . " " .  $cmd . " " . $tag2cmd[$cmd]);
-    fwrite($f, "\n===\n$content\n===\n$filtered");
+    fwrite($f, "\nwp_filter = " . print_r($wp_filter, true));
+    fwrite($f, "\nlines = " . print_r($lines, true));
+    fwrite($f, "\nlines[0][0:2] = " . substr($lines[0], 0, 2));
+    fwrite($f, "\nlines[0][0:2] === '#!' = " . (substr($lines[0], 0, 2) === '#!'));
+    fwrite($f, "\ntag = " .  $tag);
+    fwrite($f, "\ncmd = " .  $cmd);
+    fwrite($f, "\nretval = " .  $retval);
+    fwrite($f, "\n\n\ncontent =\n$content");
+    fwrite($f, "\n\n\nfiltered =\n$filtered");
+    fwrite($f, "\n\n\nstderr =\n$stderr");
     fclose($f);
   }
   return $filtered;
