@@ -27,12 +27,23 @@ Setup
 Drop `easyfilt.php` into your `wp-content/plugins/` directory, then activate
 the plugin from the admin interface.
 
-Related Links
--------------
+Links
+-----
 
 The author of [PHP Markdown Extras] wrote an [informative blog post] describing
 problems he had getting his filter to work properly and co-exist with the other
 built-in filters.
+
+Changes
+-------
+
+version 0.2, 2008-10-23
+
+- fixed debugging code
+
+version 0.1, 2008-10-22
+
+- initial release
 
 [WordPress]: http://www.wordpress.org/
 [Pandoc]: http://johnmacfarlane.net/pandoc/
