@@ -1,23 +1,21 @@
 Overview
 --------
 
-This is a simple, general filter plug-in for WordPress.  You specify a mapping
+This is a simple, general filter plugin for [WordPress].  You specify a mapping
 from tags to commands, such as:
 
   $tag2cmd = array('pandoc' => '/usr/bin/pandoc -s --tab-stop=2');
 
-Then, for posts which are prefixed with a shebang line containing that tag, as in:
+Then, for any posts which start with a shebang line containing that tag, as in:
 
   #!pandoc
-
   Hello, world.
 
-Then the plug-in will feed the post contents to that command's stdin and return
-the rendered output to WordPress for display.
+the plugin will feed the post contents (minus the shebang line) to the mapped
+command's stdin, and return the rendered output to WordPress for display.
 
-This plug-in was designed to allow me to start using [Pandoc] for writing my
-blog posts.  (I couldn't force myself to use the [PHP Markdown Extras]
-plug-in.)
+This plugin was designed to allow me to start using [Pandoc] for writing my
+blog posts.  (I couldn't force myself to use the [PHP Markdown Extras] plugin.)
 
 It disables the `wpautop` filter, which automatically inserts `<p>` tags (among
 other magic), because that filter cannot properly parse the style of HTML that
@@ -27,15 +25,16 @@ Setup
 -----
 
 Drop `easyfilt.php` into your `wp-content/plugins/` directory, then activate
-the plug-in from the admin interface.
+the plugin from the admin interface.
 
-Notes
------
+Related Links
+-------------
 
 The author of [PHP Markdown Extras] wrote an [informative blog post] describing
 problems he had getting his filter to work properly and co-exist with the other
 built-in filters.
 
+[WordPress]: http://www.wordpress.org/
 [Pandoc]: http://johnmacfarlane.net/pandoc/
 [PHP Markdown Extras]: http://michelf.com/projects/php-markdown/extra/
 [informative blog post]: http://michelf.com/weblog/2005/wordpress-text-flow-vs-markdown/
