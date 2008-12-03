@@ -4,7 +4,7 @@ Overview
 This is a simple, general filter plugin for [WordPress].  You specify a mapping
 from tags to commands, such as:
 
-  $tag2cmd = array('pandoc' => '/usr/bin/pandoc -s --tab-stop=2');
+  $tag2cmd = array('pandoc' => '/usr/bin/pandoc -S --tab-stop=2');
 
 Then, for any posts which start with a shebang line containing that tag, as in:
 
